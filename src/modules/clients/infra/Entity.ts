@@ -1,15 +1,12 @@
+import { Rifa } from '../../rifas/infra/Entity';
 import {
     Entity,
     Column,
     PrimaryGeneratedColumn,
     CreateDateColumn,
     UpdateDateColumn,
-    DeleteDateColumn,
     OneToMany,
-    JoinTable,
 } from 'typeorm';
-import { Exclude } from 'class-transformer';
-import { Shop } from '../../shop/infra/Entity';
 
 @Entity('clients')
 export class Client {
@@ -20,39 +17,11 @@ export class Client {
     name: string;
 
     @Column()
-    logradouro: string;
-
-    @Column()
-    bairro: string;
-
-    @Column()
-    localidade: string;
-
-    @Column()
-    uf: string;
-
-    @Column()
-    residenceNumber: string;
-
-    @Column()
-    cep: string;
-
-    @Column()
-    email: string;
-
-    @Column()
     numberPhone: string;
-
-    @OneToMany(() => Shop, shop => shop.client)
-    shop: Shop[];
 
     @CreateDateColumn()
     createdAt: Date;
 
     @UpdateDateColumn()
     updatedAt: Date;
-
-    @DeleteDateColumn()
-    @Exclude()
-    deletedAt?: Date;
 }

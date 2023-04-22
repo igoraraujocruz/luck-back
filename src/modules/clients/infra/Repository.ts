@@ -10,16 +10,21 @@ export class Repository implements contract {
         this.ormRepository = getRepository(Client);
     }
 
-    async create({ name, cep, logradouro, bairro, localidade, residenceNumber, uf, email, numberPhone }: create): Promise<Client> {
-        const item = this.ormRepository.create({ name, cep, email, numberPhone, logradouro, bairro, localidade, residenceNumber, uf });
+    async create({ name, numberPhone }: create): Promise<Client> {
+
+        const item = this.ormRepository.create({ name, numberPhone });
 
         await this.ormRepository.save(item);
 
         return item;
     }
 
-    async getAll(): Promise<Client[]> {
-        const item = this.ormRepository.find()
+    async findById(clientId: string): Promise<Client | undefined> {
+        const item = await this.ormRepository.findOne({
+            where: {
+                id: clientId
+            }
+        });
 
         return item;
     }

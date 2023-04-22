@@ -1,71 +1,29 @@
-
-import { instanceToPlain } from 'class-transformer';
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
 import { Create } from '../services/Create';
-import { GetAll } from '../services/GetAll';
-import { Client } from "@googlemaps/google-maps-services-js";
+import { gerarPix } from '../services/gerarPix';
+
 
 export class Controller {
     async create(
         request: Request,
         response: Response,
     ): Promise<Response> {
-        const { name, cep, logradouro, bairro, localidade, uf, residenceNumber, email, numberPhone } =
+        const { name, rifas, numberPhone } =
             request.body;
 
         const numberPhoneFormated = numberPhone.replace('(', '').replace(')', '').replace(' ', '').replace('-', '')
 
         const create = container.resolve(Create);
 
-        const item = await create.execute({
-            name, cep, logradouro, bairro, localidade, uf, residenceNumber, email, numberPhone: numberPhoneFormated
-        });
-
-        return response.status(200).json(item);
-    }
-
-    async getAll(request: Request, response: Response): Promise<Response> {
-        const getAll = container.resolve(GetAll)
-
-        const item = await getAll.execute()
-
-        return response.status(200).json(instanceToPlain(item))
-    }
-
-    async getAddress(request: Request, response: Response): Promise<Response> {
-
-        const { address } =
-            request.body;
-
-        const client = new Client({});
-        
-        const getAddress = await client.distancematrix({
-            params: {
-                origins: [
-                    `${process.env.ENDERECO_DA_LOJA}`
-                ],
-                destinations: [
-                    `${address.logradouro}, ${address.residenceNumber} - ${address.bairro}, ${address.localidade} - ${address.uf}, ${address.cep}`
-                ],
-                key: `${process.env.GOOGLE_KEY}`
+        const item =  await create.execute(
+            {
+                name, numberPhone: numberPhoneFormated, rifas,
             }
-        })
+        );
 
-        const addressComplete = getAddress.data.rows[0].elements[0].distance.value
+        const { qrcode } = await gerarPix(2, 'igor')
 
-        switch (address.localidade) {
-            case 'Vitória':
-                return response.status(200).json(15)
-            
-            case 'Vila Velha':
-                return response.status(200).json(20)
-
-            case 'Serra':
-            case 'Cariacica':    
-                return response.status(200).json(30)
-            default:
-                return response.status(200).json(-1)
-        }
+        return response.status(201).json(qrcode.data);
     }
 }
