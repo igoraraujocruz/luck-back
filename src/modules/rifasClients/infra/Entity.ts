@@ -9,7 +9,7 @@ import {
 } from 'typeorm';
 
 @Entity('rifasClients')
-export class RifaClient {
+export class RifasClients {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 

@@ -23,7 +23,7 @@ export class Repository implements contract {
             order: {
                 number: 'ASC'
             },
-            relations: ['clients']     
+            relations: ['client']    
         })
 
         return item;

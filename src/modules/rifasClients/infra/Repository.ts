@@ -1,16 +1,16 @@
 import { getRepository, Repository as TypeormRepository } from 'typeorm';
 import { contract } from '../interfaces/contract';
-import { RifaClient } from './Entity';
+import { RifasClients } from './Entity';
 import { create } from '../interfaces/create'
 
 export class Repository implements contract {
-    private ormRepository: TypeormRepository<RifaClient>;
+    private ormRepository: TypeormRepository<RifasClients>;
 
     constructor() {
-        this.ormRepository = getRepository(RifaClient);
+        this.ormRepository = getRepository(RifasClients);
     }
 
-    async create({ rifaId, clientId }: create): Promise<RifaClient> {
+    async create({ rifaId, clientId }: create): Promise<RifasClients> {
         const item = this.ormRepository.create({ rifaId, clientId });
 
         await this.ormRepository.save(item);
@@ -18,13 +18,13 @@ export class Repository implements contract {
         return item;
     }
 
-    async getAll(): Promise<RifaClient[]> {
+    async getAll(): Promise<RifasClients[]> {
         const item = await this.ormRepository.find()
 
         return item;
     }
 
-    async findById(rifaClientId: string): Promise<RifaClient | undefined> {
+    async findById(rifaClientId: string): Promise<RifasClients | undefined> {
 
         const item = await this.ormRepository.findOne({
             where: {
@@ -35,7 +35,7 @@ export class Repository implements contract {
         return item;
     }
 
-    async save(item: RifaClient): Promise<RifaClient> {
+    async save(item: RifasClients): Promise<RifasClients> {
         return this.ormRepository.save(item);
     }
 }

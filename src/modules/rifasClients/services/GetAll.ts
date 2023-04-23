@@ -1,15 +1,15 @@
 import { inject, injectable } from 'tsyringe';
-import { RifaClient } from '../infra/Entity';
+import { RifasClients } from '../infra/Entity';
 import { contract } from '../interfaces/contract';
 
 @injectable()
 export class GetAll {
     constructor(
-        @inject('RifaClient')
+        @inject('RifasClients')
         private repository: contract,
     ) {}
 
-    async execute(): Promise<RifaClient[]> {
+    async execute(): Promise<RifasClients[]> {
 
         const item = await this.repository.getAll();
 

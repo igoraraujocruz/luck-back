@@ -28,6 +28,6 @@ container.registerSingleton<productContract>(
 );
 
 container.registerSingleton<rifasClientsContract>(
-    'RifaClient',
+    'RifasClients',
     RifasClientsRepository,
 );
