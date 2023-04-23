@@ -6,8 +6,8 @@ import { Repository as ClientRepository } from '../modules/clients/infra/Reposit
 import { contract as rifaContract } from '../modules/rifas/interfaces/contract';
 import { Repository as RifaRepository } from '../modules/rifas/infra/Repository';
 
-import { contract as rifasClientsContract } from '../modules/rifasClients/interfaces/contract';
-import { Repository as RifasClientsRepository } from '../modules/rifasClients/infra/Repository';
+import { contract as productContract } from '../modules/products/interfaces/contract';
+import { Repository as ProductRepository } from '../modules/products/infra/Repository';
 
 container.registerSingleton<clientContract>(
     'Client',
@@ -19,7 +19,7 @@ container.registerSingleton<rifaContract>(
     RifaRepository,
 );
 
-container.registerSingleton<rifasClientsContract>(
-    'RifasClients',
-    RifasClientsRepository,
+container.registerSingleton<productContract>(
+    'Product',
+    ProductRepository,
 );

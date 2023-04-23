@@ -1,6 +1,6 @@
 import {MigrationInterface, QueryRunner, Table} from "typeorm";
 
-export class ClientsTable1682128029725 implements MigrationInterface {
+export class ClientTable1682216907451 implements MigrationInterface {
 
     async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.query('CREATE EXTENSION IF NOT EXISTS "uuid-ossp"');
@@ -24,6 +24,10 @@ export class ClientsTable1682128029725 implements MigrationInterface {
                         type: 'varchar',
                     },
                     {
+                        name: 'rifaId',
+                        type: 'uuid',
+                    },
+                    {
                         name: 'createdAt',
                         type: 'timestamp',
                         default: 'now()',
@@ -33,7 +37,17 @@ export class ClientsTable1682128029725 implements MigrationInterface {
                         type: 'timestamp',
                         default: 'now()',
                     },
-                ]
+                ],
+                foreignKeys: [
+                    {
+                        name: 'FKClientsRifas',
+                        referencedTableName: 'rifas',
+                        referencedColumnNames: ['id'],
+                        columnNames: ['rifaId'],
+                        onDelete: 'CASCADE',
+                        onUpdate: 'CASCADE',
+                    }
+                ],
             }),
         );
     }

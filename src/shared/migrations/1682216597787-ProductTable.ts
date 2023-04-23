@@ -1,11 +1,12 @@
 import {MigrationInterface, QueryRunner, Table} from "typeorm";
 
-export class RifasTable1682127996543 implements MigrationInterface {
+export class ProductTable1682216597787 implements MigrationInterface {
+
     async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.query('CREATE EXTENSION IF NOT EXISTS "uuid-ossp"');
         await queryRunner.createTable(
             new Table({
-                name: 'rifas',
+                name: 'products',
                 columns: [
                     {
                         name: 'id',
@@ -15,17 +16,36 @@ export class RifasTable1682127996543 implements MigrationInterface {
                         default: 'uuid_generate_v4()',
                     },
                     {
-                        name: 'number',
-                        type: 'int',
+                        name: 'name',
+                        type: 'varchar',
+                    },
+                    {
+                        name: 'imgSrc',
+                        type: 'varchar',
+                    },
+                    {
+                        name: 'videoSrc',
+                        type: 'varchar',
+                    },
+                    {
+                        name: 'description',
+                        type: 'varchar',
+                    },
+                    {
+                        name: 'luckDay',
+                        type: 'timestamp',
                     },
                     {
                         name: 'price',
-                        type: 'decimal',
+                        type: 'decimal'
                     },
                     {
-                        name: 'isPaid',
-                        type: 'boolean',
-                        default: false
+                        name: 'quantidadeDeRifas',
+                        type: 'int'
+                    },
+                    {
+                        name: 'rifasRestantes',
+                        type: 'int'
                     },
                     {
                         name: 'createdAt',
@@ -43,7 +63,7 @@ export class RifasTable1682127996543 implements MigrationInterface {
     }
 
     async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.dropTable('rifas');
+        await queryRunner.dropTable('products');
     }
 
 }

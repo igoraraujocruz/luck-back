@@ -10,8 +10,8 @@ export class Repository implements contract {
         this.ormRepository = getRepository(Rifa);
     }
 
-    async create({ number }: create): Promise<Rifa> {
-        const item = this.ormRepository.create({ number });
+    async create({ number, productId }: create): Promise<Rifa> {
+        const item = this.ormRepository.create({ number, productId });
 
         await this.ormRepository.save(item);
 
@@ -22,8 +22,7 @@ export class Repository implements contract {
         const item = await this.ormRepository.find({
             order: {
                 number: 'ASC'
-            },
-            relations: ['clients']
+            }
         })
 
         return item;
@@ -34,8 +33,7 @@ export class Repository implements contract {
         const item = await this.ormRepository.findOne({
             where: {
                 id: rifa
-            },
-            relations: ['clients']
+            }
         });
 
         return item;

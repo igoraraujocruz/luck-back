@@ -6,12 +6,10 @@ import {
     CreateDateColumn,
     UpdateDateColumn,
     OneToMany,
-    OneToOne,
-    JoinColumn,
 } from 'typeorm';
 
-@Entity('clients')
-export class Client {
+@Entity('products')
+export class Product {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
@@ -19,14 +17,30 @@ export class Client {
     name: string;
 
     @Column()
-    rifaId: string;
-
-    @OneToOne(() => Rifa)
-    @JoinColumn({ name: 'rifaId' })
-    rifa: Rifa;
+    imgSrc: string;
 
     @Column()
-    numberPhone: string;
+    videoSrc: string;
+
+    @Column()
+    description: string;
+
+    @Column()
+    luckDay: Date;
+
+    @Column()
+    price: number;
+
+    @Column()
+    quantidadeDeRifas: number;
+
+    @Column()
+    rifasRestantes: number;
+
+    @OneToMany(() => Rifa, rifa => rifa.product, {
+        eager: true
+    })
+    rifas: Rifa[]
 
     @CreateDateColumn()
     createdAt: Date;

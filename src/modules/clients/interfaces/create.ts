@@ -1,5 +1,5 @@
 export interface create {
     name: string;
-    rifas?: string[];
+    rifaId: string;
     numberPhone: string;
 }
