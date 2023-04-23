@@ -22,7 +22,8 @@ export class Repository implements contract {
         const item = await this.ormRepository.find({
             order: {
                 number: 'ASC'
-            }
+            },
+            relations: ['clients']     
         })
 
         return item;

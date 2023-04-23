@@ -1,12 +1,11 @@
 import {MigrationInterface, QueryRunner, Table} from "typeorm";
 
-export class ClientTable1682216907451 implements MigrationInterface {
+export class RifasClientsTable1682265987166 implements MigrationInterface {
 
     async up(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.query('CREATE EXTENSION IF NOT EXISTS "uuid-ossp"');
         await queryRunner.createTable(
             new Table({
-                name: 'clients',
+                name: 'rifasClients',
                 columns: [
                     {
                         name: 'id',
@@ -16,12 +15,12 @@ export class ClientTable1682216907451 implements MigrationInterface {
                         default: 'uuid_generate_v4()',
                     },
                     {
-                        name: 'name',
-                        type: 'varchar',
+                        name: 'rifaId',
+                        type: 'uuid',
                     },
                     {
-                        name: 'numberPhone',
-                        type: 'varchar',
+                        name: 'clientId',
+                        type: 'uuid',
                     },
                     {
                         name: 'createdAt',
@@ -33,13 +32,25 @@ export class ClientTable1682216907451 implements MigrationInterface {
                         type: 'timestamp',
                         default: 'now()',
                     },
-                ]
+                ],
+                foreignKeys: [
+                    {
+                        columnNames: ['rifaId'],
+                        referencedColumnNames: ['id'],
+                        referencedTableName: 'rifas',
+                    },
+                    {
+                        columnNames: ['clientId'],
+                        referencedColumnNames: ['id'],
+                        referencedTableName: 'clients',
+                    },
+                ],
             }),
         );
     }
 
     async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.dropTable('clients');
+        await queryRunner.dropTable('rifasClients');
     }
 
 }

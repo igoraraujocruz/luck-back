@@ -1,3 +1,5 @@
+import { Product } from '../../products/infra/Entity';
+import { Client } from '../../clients/infra/Entity';
 import {
     Entity,
     Column,
@@ -6,16 +8,16 @@ import {
     UpdateDateColumn,
 } from 'typeorm';
 
-@Entity('clients')
-export class Client {
+@Entity('rifasClients')
+export class RifaClient {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
     @Column()
-    name: string;
+    rifaId: string;
 
     @Column()
-    numberPhone: string;
+    clientId: string;
 
     @CreateDateColumn()
     createdAt: Date;

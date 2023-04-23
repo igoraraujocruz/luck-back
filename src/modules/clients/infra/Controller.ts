@@ -4,6 +4,7 @@ import { Create } from '../services/Create';
 import { VerificarRifa } from '../services/VerificarRifa';
 import { gerarPix } from '../services/gerarPix';
 import { GetById } from '../../products/services/GetById';
+import { Create as CreateRifaClient } from '../../rifasClients/services/Create';
 
 
 export class Controller {
@@ -19,7 +20,7 @@ export class Controller {
         const verify = container.resolve(VerificarRifa);
         const create = container.resolve(Create);
         const getProductById = container.resolve(GetById);
-
+        const createRifaClient = container.resolve(CreateRifaClient)
 
         for(const rifa of rifas) {
             await verify.execute(rifa);
@@ -27,12 +28,11 @@ export class Controller {
 
         var contador = 0
 
+        const client = await create.execute({ name, numberPhone: numberPhoneFormated })
+
         for(const rifa of rifas) {
-            await create.execute(
-                {
-                    name, numberPhone: numberPhoneFormated, rifaId: rifa,
-                }
-            );
+
+            await createRifaClient.execute({clientId: client.id, rifaId: rifa})
 
             contador++
         }

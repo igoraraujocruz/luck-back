@@ -9,6 +9,8 @@ import {
     OneToOne,
     JoinColumn,
     ManyToOne,
+    JoinTable,
+    ManyToMany,
 } from 'typeorm';
 
 @Entity('rifas')
@@ -22,10 +24,17 @@ export class Rifa {
     @Column()
     isPaid: boolean;
     
-    @OneToOne(() => Client, client => client.rifa, {
-        eager: true
+    @ManyToMany(() => Client)
+    @JoinTable({
+        name: 'rifasClients',
+        joinColumn: {
+            name: 'rifaId',
+        },
+        inverseJoinColumn: {
+            name: 'clientId',
+        },
     })
-    client: Client;
+    client: Client[];
 
     @Column()
     productId: string;
