@@ -24,14 +24,16 @@ export class Rifa {
     @Column()
     isPaid: boolean;
     
-    @ManyToMany(() => Client)
+    @ManyToMany(() => Client, {eager: true})
     @JoinTable({
         name: 'rifasClients',
         joinColumn: {
             name: 'rifaId',
+            referencedColumnName: 'id'
         },
         inverseJoinColumn: {
             name: 'clientId',
+            referencedColumnName: 'id'
         },
     })
     client: Client[];
