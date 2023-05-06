@@ -10,8 +10,8 @@ export class Repository implements contract {
         this.ormRepository = getRepository(Product);
     }
 
-    async create({ name,description,imgSrc,luckDay,price,quantidadeDeRifas,videoSrc }: create): Promise<Product> {
-        const item = this.ormRepository.create({ name,description,imgSrc,luckDay,price,quantidadeDeRifas,videoSrc, rifasRestantes: quantidadeDeRifas });
+    async create({ name,description,imgSrc,luckDay,price,quantidadeDeRifas,videoSrc, slug }: create): Promise<Product> {
+        const item = this.ormRepository.create({ name,description,imgSrc,luckDay,price,quantidadeDeRifas,videoSrc, rifasRestantes: quantidadeDeRifas, slug });
 
         await this.ormRepository.save(item);
 
@@ -29,6 +29,17 @@ export class Repository implements contract {
         const item = await this.ormRepository.findOne({
             where: {
                 id: rifa
+            }
+        });
+
+        return item;
+    }
+
+    async findBySlug(productSlug: string): Promise<Product | undefined> {
+
+        const item = await this.ormRepository.findOne({
+            where: {
+                slug: productSlug
             }
         });
 

@@ -6,4 +6,5 @@ export interface create {
     luckDay: Date;
     price: number;
     quantidadeDeRifas: number;
+    slug: string;
 }

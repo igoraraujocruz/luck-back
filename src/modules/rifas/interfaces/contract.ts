@@ -6,4 +6,5 @@ export interface contract {
     getAll(): Promise<Rifa[]>;
     save(rifa: Rifa): Promise<Rifa>;
     findById(rifa: string): Promise<Rifa | undefined>;
+    findByClientId(clientId: string): Promise<Rifa[] | undefined>
 }

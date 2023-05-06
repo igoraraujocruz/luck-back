@@ -20,6 +20,10 @@ export class ProductTable1682216597787 implements MigrationInterface {
                         type: 'varchar',
                     },
                     {
+                        name: 'slug',
+                        type: 'varchar',
+                    },
+                    {
                         name: 'imgSrc',
                         type: 'varchar',
                     },

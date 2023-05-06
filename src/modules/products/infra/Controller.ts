@@ -4,9 +4,22 @@ import { Request, Response } from 'express';
 import { container } from 'tsyringe';
 import { GetAll } from '../services/GetAll';
 import { Create } from '../services/Create';
+import slugify from 'slugify';
+import { GetBySlug } from '../services/GetBySlug';
 
 export class Controller {
-    async getAll(request: Request, response: Response): Promise<Response> {
+    async get(request: Request, response: Response): Promise<Response> {
+
+        const { productSlug } = request.query;
+
+        if (productSlug) {
+            const get = container.resolve(GetBySlug);
+
+            const product = await get.execute(String(productSlug));
+
+            return response.json(instanceToPlain(product));
+        }
+
         const getAll = container.resolve(GetAll)
 
         const item = await getAll.execute()
@@ -20,7 +33,9 @@ export class Controller {
 
         const create = container.resolve(Create)
 
-        const item = await create.execute({name, price, imgSrc, videoSrc, description, luckDay, quantidadeDeRifas})
+        const item = await create.execute({name, price, imgSrc, slug: slugify(name, {
+            lower: true,
+        }), videoSrc, description, luckDay, quantidadeDeRifas})
 
         return response.status(200).json(instanceToPlain(item))
     }

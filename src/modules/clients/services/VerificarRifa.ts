@@ -17,7 +17,7 @@ export class VerificarRifa {
             throw new AppError("Rifa não encontrada")
         }
 
-        if(rifa.client != null) {
+        if(rifa.client[0] != null) {
             throw new AppError(`A rifa nº ${rifa.number} foi reservada. Se o pagamento não for realizado em até 2 minutos, ela será disponibilizada.`)
         }
         

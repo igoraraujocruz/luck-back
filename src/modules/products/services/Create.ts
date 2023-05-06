@@ -16,11 +16,11 @@ export class Create {
 
     async execute({
         name,description,imgSrc,luckDay,
-        price,quantidadeDeRifas,videoSrc   
+        price,quantidadeDeRifas,videoSrc, slug  
     }: create): Promise<Product> {
 
         const item = await this.repository.create({name, description, imgSrc, 
-            luckDay, price, quantidadeDeRifas, videoSrc});
+            luckDay, price, quantidadeDeRifas, videoSrc, slug});
 
             for(let i=0; i < quantidadeDeRifas; i++) {
                 await this.rifaRepository.create({number: i+1, productId: item.id})

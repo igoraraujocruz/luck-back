@@ -29,6 +29,9 @@ export class Product {
     luckDay: Date;
 
     @Column()
+    slug: string;
+
+    @Column()
     price: number;
 
     @Column()

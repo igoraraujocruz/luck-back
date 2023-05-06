@@ -5,6 +5,7 @@ import { VerificarRifa } from '../services/VerificarRifa';
 import { gerarPix } from '../services/gerarPix';
 import { GetById } from '../../products/services/GetById';
 import { Create as CreateRifaClient } from '../../rifasClients/services/Create';
+import { io } from '../../../shared/http';
 
 
 export class Controller {
@@ -18,6 +19,7 @@ export class Controller {
         const numberPhoneFormated = numberPhone.replace('(', '').replace(')', '').replace(' ', '').replace('-', '')
 
         const verify = container.resolve(VerificarRifa);
+        
         const create = container.resolve(Create);
         const getProductById = container.resolve(GetById);
         const createRifaClient = container.resolve(CreateRifaClient)
@@ -30,6 +32,12 @@ export class Controller {
 
         const client = await create.execute({ name, numberPhone: numberPhoneFormated })
 
+        const product = await getProductById.execute(productId)
+
+        if(!product) {
+            throw new Error('Produto não encontrado.')
+        }
+
         for(const rifa of rifas) {
 
             await createRifaClient.execute({clientId: client.id, rifaId: rifa})
@@ -37,15 +45,12 @@ export class Controller {
             contador++
         }
 
-        const product = await getProductById.execute(productId)
-
-        if(!product) {
-            throw new Error('Produto não encontrado.')
-        }
-
+        
         const valorTotalAPagar = contador * product.price
 
         const { qrcode } = await gerarPix(valorTotalAPagar, 'igor')
+
+        io.to(product.slug).emit("updateRifas")
 
         return response.status(201).json(qrcode.data);
     }

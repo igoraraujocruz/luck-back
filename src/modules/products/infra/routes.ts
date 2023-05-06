@@ -5,7 +5,12 @@ import { Joi, Segments, celebrate } from 'celebrate';
 export const router = Router();
 const controller = new Controller();
 
-router.get('/', controller.getAll)
+router.get('/', celebrate({
+    [Segments.QUERY]: {
+        productSlug: Joi.string(),
+    },
+}), controller.get)
+
 router.post(
     '/',
     celebrate({

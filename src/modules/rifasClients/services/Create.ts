@@ -3,6 +3,7 @@ import { RifasClients } from '../infra/Entity';
 import { contract } from '../interfaces/contract';
 import { create } from '../interfaces/create';
 
+
 @injectable()
 export class Create {
     constructor(
@@ -12,7 +13,7 @@ export class Create {
 
     async execute({
         rifaId,
-        clientId   
+        clientId 
     }: create): Promise<RifasClients> {
 
         const item = await this.repository.create({rifaId, clientId});

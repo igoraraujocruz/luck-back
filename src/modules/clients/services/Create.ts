@@ -14,7 +14,7 @@ export class Create {
         {name, numberPhone}: create 
     ): Promise<Client> {
 
-        const client = await this.repository.create({name,numberPhone })
+        const client = await this.repository.create({name,numberPhone})
 
         return client;
     }

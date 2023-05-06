@@ -1,5 +1,3 @@
-import { Product } from '../../products/infra/Entity';
-import { Client } from '../../clients/infra/Entity';
 import {
     Entity,
     Column,

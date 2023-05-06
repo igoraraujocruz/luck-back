@@ -35,6 +35,13 @@ export class Repository implements contract {
         return item;
     }
 
+    
+    async remove(clientId: string): Promise<void | undefined> {
+        await this.ormRepository.delete({
+            clientId: clientId
+        });
+    }
+
     async save(item: RifasClients): Promise<RifasClients> {
         return this.ormRepository.save(item);
     }

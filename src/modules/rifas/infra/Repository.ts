@@ -29,6 +29,17 @@ export class Repository implements contract {
         return item;
     }
 
+    
+    async findByClientId(clientId: string): Promise<Rifa[] | undefined> {
+
+        const item = await this.ormRepository.createQueryBuilder('rifa')
+        .leftJoinAndSelect('rifa.client', 'client')
+        .where('client.ID = :clientId', { clientId })
+        .getMany();
+
+        return item;
+    }
+
     async findById(rifa: string): Promise<Rifa | undefined> {
 
         const item = await this.ormRepository.findOne({
