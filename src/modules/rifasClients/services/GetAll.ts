@@ -1,23 +1,18 @@
 import { inject, injectable } from 'tsyringe';
 import { RifasClients } from '../infra/Entity';
 import { contract } from '../interfaces/contract';
-import { create } from '../interfaces/create';
-
 
 @injectable()
-export class Create {
+export class GetAll {
     constructor(
         @inject('RifasClients')
         private repository: contract,
     ) {}
 
-    async execute({
-        rifaId,
-        clientId 
-    }: create): Promise<RifasClients> {
+    async execute(): Promise<RifasClients[]> {
 
-        const item = await this.repository.create({rifaId, clientId});
+        const item = await this.repository.getAll();
 
-        return item
+        return item;
     }
 }

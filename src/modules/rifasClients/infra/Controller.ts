@@ -3,7 +3,7 @@ import { instanceToPlain } from 'class-transformer';
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
 import { GetAll } from '../services/GetAll';
-import { PaymentPaid } from '../services/PaymentPaid';
+import { Create } from '../services/Create';
 import { RemoveClient } from '../services/RemoveClient';
 
 export class Controller {
@@ -15,13 +15,24 @@ export class Controller {
         return response.status(200).json(instanceToPlain(item))
     }
 
-    async paymentPaid(request: Request, response: Response): Promise<Response> {
+    async create(request: Request, response: Response): Promise<Response> {
+
+        const { rifaId, clientId } = request.body
+
+        const create = container.resolve(Create)
+
+        const item = await create.execute({rifaId, clientId})
+
+        return response.status(200).json(instanceToPlain(item))
+    }
+
+    async removeClient(request: Request, response: Response): Promise<Response> {
 
         const { clientId } = request.body;
 
-        const paymentPaid = container.resolve(PaymentPaid)
+        const removeClient = container.resolve(RemoveClient)
 
-        const item = await paymentPaid.execute(clientId)
+        const item = await removeClient.execute(clientId)
 
         return response.status(200).json(instanceToPlain(item))
     }

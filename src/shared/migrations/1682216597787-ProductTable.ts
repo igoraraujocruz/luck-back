@@ -1,12 +1,12 @@
 import {MigrationInterface, QueryRunner, Table} from "typeorm";
 
-export class ClientsTable1682128029725 implements MigrationInterface {
+export class ProductTable1682216597787 implements MigrationInterface {
 
     async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.query('CREATE EXTENSION IF NOT EXISTS "uuid-ossp"');
         await queryRunner.createTable(
             new Table({
-                name: 'clients',
+                name: 'products',
                 columns: [
                     {
                         name: 'id',
@@ -20,8 +20,36 @@ export class ClientsTable1682128029725 implements MigrationInterface {
                         type: 'varchar',
                     },
                     {
-                        name: 'numberPhone',
+                        name: 'slug',
                         type: 'varchar',
+                    },
+                    {
+                        name: 'imgSrc',
+                        type: 'varchar',
+                    },
+                    {
+                        name: 'videoSrc',
+                        type: 'varchar',
+                    },
+                    {
+                        name: 'description',
+                        type: 'varchar',
+                    },
+                    {
+                        name: 'luckDay',
+                        type: 'timestamp',
+                    },
+                    {
+                        name: 'price',
+                        type: 'decimal'
+                    },
+                    {
+                        name: 'quantidadeDeRifas',
+                        type: 'int'
+                    },
+                    {
+                        name: 'rifasRestantes',
+                        type: 'int'
                     },
                     {
                         name: 'createdAt',
@@ -32,14 +60,14 @@ export class ClientsTable1682128029725 implements MigrationInterface {
                         name: 'updatedAt',
                         type: 'timestamp',
                         default: 'now()',
-                    },
-                ]
+                    }
+                ],
             }),
         );
     }
 
     async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.dropTable('clients');
+        await queryRunner.dropTable('products');
     }
 
 }

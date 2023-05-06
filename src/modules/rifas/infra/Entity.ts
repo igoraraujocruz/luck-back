@@ -1,3 +1,4 @@
+import { Product } from '../../products/infra/Entity';
 import { Client } from '../../clients/infra/Entity';
 import {
     Entity,
@@ -5,8 +6,11 @@ import {
     PrimaryGeneratedColumn,
     CreateDateColumn,
     UpdateDateColumn,
-    ManyToMany,
+    OneToOne,
+    JoinColumn,
+    ManyToOne,
     JoinTable,
+    ManyToMany,
 } from 'typeorm';
 
 @Entity('rifas')
@@ -18,22 +22,28 @@ export class Rifa {
     number: number;
 
     @Column()
-    price: number;
-
-    @Column()
     isPaid: boolean;
     
-    @ManyToMany(() => Client)
+    @ManyToMany(() => Client, {eager: true})
     @JoinTable({
         name: 'rifasClients',
         joinColumn: {
             name: 'rifaId',
+            referencedColumnName: 'id'
         },
         inverseJoinColumn: {
-            name: 'clientId'
-        }
+            name: 'clientId',
+            referencedColumnName: 'id'
+        },
     })
-    clients: Client[];
+    client: Client[];
+
+    @Column()
+    productId: string;
+
+    @ManyToOne(() => Product, product => product.rifas)
+    @JoinColumn({ name: 'productId' })
+    product: Product;
 
     @CreateDateColumn()
     createdAt: Date;

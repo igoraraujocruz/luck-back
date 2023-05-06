@@ -1,11 +1,9 @@
-import { Rifa } from '../../rifas/infra/Entity';
 import {
     Entity,
     Column,
     PrimaryGeneratedColumn,
     CreateDateColumn,
     UpdateDateColumn,
-    OneToMany,
 } from 'typeorm';
 
 @Entity('clients')

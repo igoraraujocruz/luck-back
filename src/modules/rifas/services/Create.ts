@@ -12,10 +12,11 @@ export class Create {
     ) {}
 
     async execute({
-        number   
+        number,
+        productId   
     }: create): Promise<Rifa> {
 
-        const item = await this.repository.create({number});
+        const item = await this.repository.create({number, productId});
 
         return item
     }

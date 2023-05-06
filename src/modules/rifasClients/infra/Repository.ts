@@ -1,6 +1,7 @@
-import { contract } from "../interfaces/contract";
 import { getRepository, Repository as TypeormRepository } from 'typeorm';
-import { RifasClients } from "./Entity";
+import { contract } from '../interfaces/contract';
+import { RifasClients } from './Entity';
+import { create } from '../interfaces/create'
 
 export class Repository implements contract {
     private ormRepository: TypeormRepository<RifasClients>;
@@ -9,35 +10,39 @@ export class Repository implements contract {
         this.ormRepository = getRepository(RifasClients);
     }
 
-    async create(rifaId: string, clientId: string): Promise<RifasClients> {
-        const item = this.ormRepository.create({ rifaId, clientId })
+    async create({ rifaId, clientId }: create): Promise<RifasClients> {
+        const item = this.ormRepository.create({ rifaId, clientId });
 
-        await this.ormRepository.save(item)
+        await this.ormRepository.save(item);
 
         return item;
     }
 
-    async findByClientId(clientId: string): Promise<RifasClients | undefined> {
+    async getAll(): Promise<RifasClients[]> {
+        const item = await this.ormRepository.find()
+
+        return item;
+    }
+
+    async findById(rifaClientId: string): Promise<RifasClients | undefined> {
 
         const item = await this.ormRepository.findOne({
             where: {
-                clientId: clientId
+                id: rifaClientId
             }
         });
 
         return item;
     }
 
-
-    async findByRifaId(rifaId: string): Promise<RifasClients | undefined> {
-
-        const item = await this.ormRepository.findOne({
-            where: {
-                id: rifaId
-            }
+    
+    async remove(clientId: string): Promise<void | undefined> {
+        await this.ormRepository.delete({
+            clientId: clientId
         });
-
-        return item;
     }
 
+    async save(item: RifasClients): Promise<RifasClients> {
+        return this.ormRepository.save(item);
+    }
 }

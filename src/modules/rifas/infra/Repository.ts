@@ -10,8 +10,8 @@ export class Repository implements contract {
         this.ormRepository = getRepository(Rifa);
     }
 
-    async create({ number }: create): Promise<Rifa> {
-        const item = this.ormRepository.create({ number });
+    async create({ number, productId }: create): Promise<Rifa> {
+        const item = this.ormRepository.create({ number, productId });
 
         await this.ormRepository.save(item);
 
@@ -23,8 +23,19 @@ export class Repository implements contract {
             order: {
                 number: 'ASC'
             },
-            relations: ['clients']
+            relations: ['client']    
         })
+
+        return item;
+    }
+
+    
+    async findByClientId(clientId: string): Promise<Rifa[] | undefined> {
+
+        const item = await this.ormRepository.createQueryBuilder('rifa')
+        .leftJoinAndSelect('rifa.client', 'client')
+        .where('client.ID = :clientId', { clientId })
+        .getMany();
 
         return item;
     }
@@ -34,8 +45,7 @@ export class Repository implements contract {
         const item = await this.ormRepository.findOne({
             where: {
                 id: rifa
-            },
-            relations: ['clients']
+            }
         });
 
         return item;

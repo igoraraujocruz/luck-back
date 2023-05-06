@@ -1,11 +1,11 @@
 import {MigrationInterface, QueryRunner, Table} from "typeorm";
 
-export class RifasTable1682127996543 implements MigrationInterface {
+export class RifasClientsTable1682265987166 implements MigrationInterface {
+
     async up(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.query('CREATE EXTENSION IF NOT EXISTS "uuid-ossp"');
         await queryRunner.createTable(
             new Table({
-                name: 'rifas',
+                name: 'rifasClients',
                 columns: [
                     {
                         name: 'id',
@@ -15,17 +15,12 @@ export class RifasTable1682127996543 implements MigrationInterface {
                         default: 'uuid_generate_v4()',
                     },
                     {
-                        name: 'number',
-                        type: 'int',
+                        name: 'rifaId',
+                        type: 'uuid',
                     },
                     {
-                        name: 'price',
-                        type: 'decimal',
-                    },
-                    {
-                        name: 'isPaid',
-                        type: 'boolean',
-                        default: false
+                        name: 'clientId',
+                        type: 'uuid',
                     },
                     {
                         name: 'createdAt',
@@ -36,14 +31,26 @@ export class RifasTable1682127996543 implements MigrationInterface {
                         name: 'updatedAt',
                         type: 'timestamp',
                         default: 'now()',
-                    }
+                    },
+                ],
+                foreignKeys: [
+                    {
+                        columnNames: ['rifaId'],
+                        referencedColumnNames: ['id'],
+                        referencedTableName: 'rifas',
+                    },
+                    {
+                        columnNames: ['clientId'],
+                        referencedColumnNames: ['id'],
+                        referencedTableName: 'clients',
+                    },
                 ],
             }),
         );
     }
 
     async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.dropTable('rifas');
+        await queryRunner.dropTable('rifasClients');
     }
 
 }
