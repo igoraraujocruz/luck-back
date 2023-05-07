@@ -4,7 +4,6 @@ import { Request, Response } from 'express';
 import { container } from 'tsyringe';
 import { GetAll } from '../services/GetAll';
 import { PaymentPaid } from '../services/PaymentPaid';
-import { RemoveClient } from '../services/RemoveClient';
 
 export class Controller {
     async getAll(request: Request, response: Response): Promise<Response> {
