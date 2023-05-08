@@ -28,8 +28,6 @@ export class Controller {
             await verify.execute(rifa);
         }
 
-        var contador = 0
-
         const client = await create.execute({ name, numberPhone: numberPhoneFormated })
 
         const product = await getProductById.execute(productId)
@@ -38,17 +36,14 @@ export class Controller {
             throw new Error('Produto não encontrado.')
         }
 
+        const valorTotalAPagar = rifas.length * product.price
+
+        const { qrcode, cobranca } = await gerarPix(valorTotalAPagar, client.id)
+
         for(const rifa of rifas) {
 
-            await createRifaClient.execute({clientId: client.id, rifaId: rifa})
-
-            contador++
+            await createRifaClient.execute({clientId: client.id, rifaId: rifa, txid: cobranca.data.txid})
         }
-
-        
-        const valorTotalAPagar = contador * product.price
-
-        const { qrcode } = await gerarPix(valorTotalAPagar, 'igor')
 
         io.to(product.slug).emit("updateRifas")
 

@@ -32,7 +32,7 @@ const cert = fs.readFileSync(
     })
   ) 
 
-  export const gerarPix = async (totalPrice: number, shopId: string) => {
+  export const gerarPix = async (totalPrice: number, clientId: string) => {
     const authResponse = await authenticate()
     const { access_token } = authResponse.data; 
     
@@ -53,7 +53,7 @@ const cert = fs.readFileSync(
             original: totalPrice.toFixed(2).toString()
         },
         chave: process.env.GN_CHAVE_PIX,
-        solicitacaoPagador: shopId
+        solicitacaoPagador: clientId
     }
 
     const cobranca = await reqGN.post('v2/cob', dataCob)
