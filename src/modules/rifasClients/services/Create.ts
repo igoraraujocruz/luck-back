@@ -13,10 +13,11 @@ export class Create {
 
     async execute({
         rifaId,
-        clientId 
+        clientId,
+        txid 
     }: create): Promise<RifasClients> {
 
-        const item = await this.repository.create({rifaId, clientId});
+        const item = await this.repository.create({rifaId, clientId, txid});
 
         return item
     }

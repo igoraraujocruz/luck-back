@@ -19,6 +19,10 @@ export class RifasClientsTable1682265987166 implements MigrationInterface {
                         type: 'uuid',
                     },
                     {
+                        name: 'txid',
+                        type: 'varchar',
+                    },
+                    {
                         name: 'clientId',
                         type: 'uuid',
                     },

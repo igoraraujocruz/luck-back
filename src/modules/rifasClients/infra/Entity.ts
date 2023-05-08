@@ -17,6 +17,9 @@ export class RifasClients {
     @Column()
     clientId: string;
 
+    @Column()
+    txid: string;
+
     @CreateDateColumn()
     createdAt: Date;
 
