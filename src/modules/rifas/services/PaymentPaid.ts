@@ -55,6 +55,6 @@ export class PaymentPaid {
             throw new AppError('Cliente não encontrado.')
         }
 
-        io.to(client.socketId).emit("client:rifaPaid")
+        io.to(client.socketId).emit("client:reset")
     }
 }
