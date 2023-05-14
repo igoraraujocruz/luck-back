@@ -22,6 +22,7 @@ export class VerifyRifaPaidIsTrue {
 
         let rifaIsPaid = false;
         let productSlug = ''
+        let clientSocket = ''
 
         for(const rifa of rifas) {
             const findRifa = await this.repository.findById(rifa);
@@ -29,6 +30,8 @@ export class VerifyRifaPaidIsTrue {
             if(!findRifa) {
                 throw new AppError('Rifa não encontrada')
             }
+
+            clientSocket = findRifa.client[0].socketId;
 
             const product = await this.productsRepository.findById(findRifa.productId)
 
@@ -47,7 +50,7 @@ export class VerifyRifaPaidIsTrue {
 
         if (!rifaIsPaid) {
             io.to(productSlug).emit("updateRifas")
-            console.log('não pagou')
+            io.to(clientSocket).emit("client:reset")
         }
     }
 }
