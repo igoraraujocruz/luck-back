@@ -47,7 +47,7 @@ const cert = fs.readFileSync(
 
     const dataCob = {   
         calendario: {
-            expiracao: 120
+            expiracao: Number(process.env.GN_TEMPO_DE_VALIDADE_PIX_EM_SEGUNDOS)
         },
         valor: {
             original: totalPrice.toFixed(2).toString()

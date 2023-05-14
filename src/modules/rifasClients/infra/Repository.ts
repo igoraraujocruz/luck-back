@@ -35,10 +35,21 @@ export class Repository implements contract {
         return item;
     }
 
+    async findByTxId(txId: string): Promise<RifasClients[]> {
+
+        const item = await this.ormRepository.find({
+            where: {
+                txid: txId
+            }
+        });
+
+        return item;
+    }
+
     
-    async remove(clientId: string): Promise<void | undefined> {
-        await this.ormRepository.delete({
-            clientId: clientId
+    async remove(rifaId: string): Promise<void | undefined> {
+       await this.ormRepository.delete({
+            rifaId: rifaId
         });
     }
 

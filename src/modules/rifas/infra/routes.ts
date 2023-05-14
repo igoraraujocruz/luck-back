@@ -7,15 +7,9 @@ const controller = new Controller();
 
 router.get('/', controller.getAll)
 
-router.post('/gerencianet/webhook(/pix)?', (req, res) => {
-    console.log(req.body);
-    res.send('200');
-})
-
-
-// router.put('/', celebrate({
-//     [Segments.BODY]: {
-//         clientId: Joi.string().uuid().required(),
-//     }, 
-// }), controller.paymentPaid)
+router.post('/gerencianet/webhook(/pix)?', celebrate({
+    [Segments.BODY]: {
+        pix: Joi.array().required(),
+    }, 
+}), controller.paymentPaid)
 

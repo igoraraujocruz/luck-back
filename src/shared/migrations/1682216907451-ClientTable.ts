@@ -20,6 +20,10 @@ export class ClientTable1682216907451 implements MigrationInterface {
                         type: 'varchar',
                     },
                     {
+                        name: 'socketId',
+                        type: 'varchar',
+                    },
+                    {
                         name: 'numberPhone',
                         type: 'varchar',
                     },
