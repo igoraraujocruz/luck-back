@@ -5,15 +5,15 @@ import { VerificarRifa } from '../services/VerificarRifa';
 import { gerarPix } from '../services/gerarPix';
 import { GetById } from '../../products/services/GetById';
 import { Create as CreateRifaClient } from '../../rifasClients/services/Create';
+import { VerifyRifaPaidIsTrue } from '../../rifas/services/VerifyRifaPaidIsTrue';
 import { io } from '../../../shared/http';
-
 
 export class Controller {
     async create(
         request: Request,
         response: Response,
     ): Promise<Response> {
-        const { name, rifas, numberPhone, productId } =
+        const { name, rifas, numberPhone, productId, socketId } =
             request.body;
 
         const numberPhoneFormated = numberPhone.replace('(', '').replace(')', '').replace(' ', '').replace('-', '')
@@ -23,12 +23,13 @@ export class Controller {
         const create = container.resolve(Create);
         const getProductById = container.resolve(GetById);
         const createRifaClient = container.resolve(CreateRifaClient)
+        const verifyRifaPaidIsTrue = container.resolve(VerifyRifaPaidIsTrue)
 
         for(const rifa of rifas) {
             await verify.execute(rifa);
         }
 
-        const client = await create.execute({ name, numberPhone: numberPhoneFormated })
+        const client = await create.execute({ name, numberPhone: numberPhoneFormated, socketId })
 
         const product = await getProductById.execute(productId)
 
@@ -46,6 +47,10 @@ export class Controller {
         }
 
         io.to(product.slug).emit("updateRifas")
+
+        setTimeout(async () => {
+            await verifyRifaPaidIsTrue.execute(rifas)
+          }, Number(process.env.GN_TEMPO_DE_VALIDADE_PIX_EM_SEGUNDOS) * 1000);
 
         return response.status(201).json(qrcode.data);
     }

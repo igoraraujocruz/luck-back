@@ -15,6 +15,9 @@ export class Client {
     name: string;
 
     @Column()
+    socketId: string;
+
+    @Column()
     numberPhone: string;
 
     @CreateDateColumn()
