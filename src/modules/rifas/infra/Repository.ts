@@ -11,7 +11,12 @@ export class Repository implements contract {
     }
 
     async create({ number, productId }: create): Promise<Rifa> {
-        const item = this.ormRepository.create({ number, productId });
+        
+        function zeroFirst(num: Number) {
+            return num.toString().padStart(2, "0");
+        }
+
+        const item = this.ormRepository.create({ number: zeroFirst(number), productId });
 
         await this.ormRepository.save(item);
 

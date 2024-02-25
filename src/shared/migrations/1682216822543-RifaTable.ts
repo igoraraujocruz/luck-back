@@ -17,7 +17,7 @@ export class RifaTable1682216822543 implements MigrationInterface {
                     },
                     {
                         name: 'number',
-                        type: 'int',
+                        type: 'varchar',
                     },
                     {
                         name: 'productId',

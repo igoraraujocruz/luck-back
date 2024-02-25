@@ -41,6 +41,7 @@ export class Controller {
 
         const { qrcode, cobranca } = await gerarPix(valorTotalAPagar, client.id)
 
+
         for(const rifa of rifas) {
 
             await createRifaClient.execute({clientId: client.id, rifaId: rifa, txid: cobranca.data.txid})

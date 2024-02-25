@@ -19,7 +19,7 @@ export class Rifa {
     id: string;
 
     @Column()
-    number: number;
+    number: string;
 
     @Column()
     isPaid: boolean;

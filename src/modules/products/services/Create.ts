@@ -23,7 +23,7 @@ export class Create {
             luckDay, price, quantidadeDeRifas, videoSrc, slug});
 
             for(let i=0; i < quantidadeDeRifas; i++) {
-                await this.rifaRepository.create({number: i+1, productId: item.id})
+                await this.rifaRepository.create({number: i, productId: item.id})
             }
 
         return item
