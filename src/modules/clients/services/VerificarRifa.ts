@@ -18,7 +18,7 @@ export class VerificarRifa {
         }
 
         if(rifa.client[0] != null) {
-            throw new AppError(`A rifa nº ${rifa.number} foi reservada. Se o pagamento não for realizado em até 2 minutos, ela será disponibilizada.`)
+            throw new AppError(`O nº ${rifa.number} foi reservado. Se o pagamento não for realizado em até ${process.env.GN_TEMPO_DE_VALIDADE_PIX_EM_SEGUNDOS} segundos, ele será disponibilizado.`)
         }
         
     }
