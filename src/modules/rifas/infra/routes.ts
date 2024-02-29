@@ -7,5 +7,9 @@ const controller = new Controller();
 
 router.get('/', controller.getAll)
 
-router.post('/gerencianet/webhook(/pix)?', controller.paymentPaid)
+router.post('/gerencianet/webhook(/pix)?', celebrate({
+    [Segments.BODY]: {
+        pix: Joi.array().required(),
+    }, 
+}), controller.paymentPaid)
 

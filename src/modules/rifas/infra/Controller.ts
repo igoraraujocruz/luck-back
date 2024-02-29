@@ -16,15 +16,12 @@ export class Controller {
 
     async paymentPaid(request: Request, response: Response): Promise<Response> {
 
-        console.log(request.body)
-        response.send('200');
+        const { txid } = request.body.pix[0]
 
-        // const { txid } = request.body.pix[0]
+        const paymentPaid = container.resolve(PaymentPaid)
 
-        // const paymentPaid = container.resolve(PaymentPaid)
+        const item = await paymentPaid.execute(txid)
 
-        // const item = await paymentPaid.execute(txid)
-
-        // return response.status(200).json(instanceToPlain(item))
+        return response.status(200).json(instanceToPlain(item))
     }
 }
