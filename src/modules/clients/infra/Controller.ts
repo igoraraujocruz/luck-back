@@ -13,7 +13,7 @@ export class Controller {
         request: Request,
         response: Response,
     ): Promise<Response> {
-        const { name, rifas, numberPhone, productId, socketId } =
+        const { name, rifas, numberPhone, productId, socketId, instagram } =
             request.body;
 
         const numberPhoneFormated = numberPhone.replace('(', '').replace(')', '').replace(' ', '').replace('-', '')
@@ -29,7 +29,7 @@ export class Controller {
             await verify.execute(rifa);
         }
 
-        const client = await create.execute({ name, numberPhone: numberPhoneFormated, socketId })
+        const client = await create.execute({ name, numberPhone: numberPhoneFormated, socketId, instagram })
 
         const product = await getProductById.execute(productId)
 

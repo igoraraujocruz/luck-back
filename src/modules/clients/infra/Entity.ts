@@ -15,6 +15,9 @@ export class Client {
     name: string;
 
     @Column()
+    instagram: string;
+
+    @Column()
     socketId: string;
 
     @Column()

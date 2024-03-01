@@ -10,9 +10,9 @@ export class Repository implements contract {
         this.ormRepository = getRepository(Client);
     }
 
-    async create({ name, numberPhone, socketId }: create): Promise<Client> {
+    async create({ name, numberPhone, socketId, instagram }: create): Promise<Client> {
 
-        const item = this.ormRepository.create({ name, numberPhone, socketId });
+        const item = this.ormRepository.create({ name, numberPhone, socketId, instagram });
 
         await this.ormRepository.save(item);
 

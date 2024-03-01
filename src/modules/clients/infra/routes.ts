@@ -14,6 +14,7 @@ router.post(
             rifas: Joi.array().required(),
             productId: Joi.string().required().uuid(),
             socketId: Joi.string().required(),
+            instagram: Joi.string(),
         },
     }),
     controller.create,

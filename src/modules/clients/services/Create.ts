@@ -11,10 +11,10 @@ export class Create {
     ) {}
 
     async execute(
-        {name, numberPhone, socketId}: create 
+        {name, numberPhone, socketId, instagram}: create 
     ): Promise<Client> {
 
-        const client = await this.repository.create({name,numberPhone, socketId})
+        const client = await this.repository.create({name,numberPhone, socketId, instagram})
 
         return client;
     }

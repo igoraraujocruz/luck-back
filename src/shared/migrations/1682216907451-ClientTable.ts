@@ -20,6 +20,11 @@ export class ClientTable1682216907451 implements MigrationInterface {
                         type: 'varchar',
                     },
                     {
+                        name: 'instagram',
+                        type: 'varchar',
+                        isNullable: true
+                    },
+                    {
                         name: 'socketId',
                         type: 'varchar',
                     },
