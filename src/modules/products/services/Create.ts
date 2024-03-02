@@ -12,6 +12,8 @@ export class Create {
         private repository: contract,
         @inject('Rifa')
         private rifaRepository: rifaContract,
+        @inject('Storage')
+        private storage: storageContract,
     ) {}
 
     async execute({
@@ -21,6 +23,8 @@ export class Create {
 
         const item = await this.repository.create({name, description, imgSrc, 
             luckDay, price, quantidadeDeRifas, videoSrc, slug});
+
+            await this.storage.saveFile(imgSrc);
 
             for(let i=0; i < quantidadeDeRifas; i++) {
                 await this.rifaRepository.create({number: i, productId: item.id})

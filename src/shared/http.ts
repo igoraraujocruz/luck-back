@@ -11,6 +11,7 @@ import cors from 'cors';
 import http from 'http'
 import { Server } from 'socket.io';
 import rateLimiter from './rateLimiter';
+import uploadConfig from '../config/upload';
 
 const app = express()
 app.use(rateLimiter)
@@ -21,6 +22,8 @@ app.use(
         origin: `${process.env.WEB_HOST}`,
     }),
 );
+
+app.use('/photos', express.static(uploadConfig.uploadsFolder));
 
 app.use(routes);
 

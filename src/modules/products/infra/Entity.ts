@@ -1,4 +1,5 @@
 import { Rifa } from '../../rifas/infra/Entity';
+import uploadConfig from '../../../config/upload'
 import {
     Entity,
     Column,
@@ -7,6 +8,7 @@ import {
     UpdateDateColumn,
     OneToMany,
 } from 'typeorm';
+import { Expose } from 'class-transformer';
 
 @Entity('products')
 export class Product {
@@ -50,4 +52,20 @@ export class Product {
 
     @UpdateDateColumn()
     updatedAt: Date;
+
+    @Expose({ name: 'imgSrc' })
+    getAvatarUrl(): string | null {
+        if (!this.imgSrc) {
+            return null;
+        }
+
+        switch (uploadConfig.driver) {
+            case 'local':
+                return `${process.env.API_HOST}/photos/${this.imgSrc}`;
+            case 's3':
+                return `https://${uploadConfig.config.aws.bucket}.s3.amazonaws.com/${this.imgSrc}`;
+            default:
+                return null;
+        }
+    }
 }

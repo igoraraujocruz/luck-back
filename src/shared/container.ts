@@ -1,5 +1,7 @@
 import { container } from 'tsyringe';
 
+import './providers';
+
 import { contract as clientContract } from '../modules/clients/interfaces/contract';
 import { Repository as ClientRepository } from '../modules/clients/infra/Repository';
 

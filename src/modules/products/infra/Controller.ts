@@ -31,9 +31,11 @@ export class Controller {
 
         const { name, price, imgSrc, videoSrc, description, luckDay, quantidadeDeRifas } = request.body
 
+        const image = request.file?.filename ? request.file?.filename : 'SEM IMG'
+
         const create = container.resolve(Create)
 
-        const item = await create.execute({name, price, imgSrc, slug: slugify(name, {
+        const item = await create.execute({name, price, imgSrc: image, slug: slugify(name, {
             lower: true,
         }), videoSrc, description, luckDay, quantidadeDeRifas})
 
