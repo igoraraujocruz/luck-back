@@ -13,7 +13,7 @@ import { Server } from 'socket.io';
 import rateLimiter from './rateLimiter';
 
 const app = express()
-//app.use(rateLimiter)
+app.use(rateLimiter)
 
 app.use(express.json())
 app.use(
