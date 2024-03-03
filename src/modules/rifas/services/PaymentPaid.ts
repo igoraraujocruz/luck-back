@@ -31,7 +31,7 @@ export class PaymentPaid {
             const rifa = await this.repository.findById(rifaCliente.rifaId);
 
             if(!rifa) {
-                throw new AppError('Rifa não encontrada.')
+                throw new AppError('Nº não encontrado')
             }
 
             const product = await this.productsRepository.findById(rifa.productId)

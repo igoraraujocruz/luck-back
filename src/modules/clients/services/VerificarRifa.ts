@@ -14,7 +14,7 @@ export class VerificarRifa {
         const rifa = await this.rifaRepository.findById(rifaId)
 
         if (!rifa) {
-            throw new AppError("Rifa não encontrada")
+            throw new AppError("Nº não encontrado")
         }
 
         if(rifa.client[0] != null) {

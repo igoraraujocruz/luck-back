@@ -28,7 +28,7 @@ export class VerifyRifaPaidIsTrue {
             const findRifa = await this.repository.findById(rifa);
 
             if(!findRifa) {
-                throw new AppError('Rifa não encontrada')
+                throw new AppError('Nº não encontrado')
             }
 
             clientSocket = findRifa.client[0].socketId;

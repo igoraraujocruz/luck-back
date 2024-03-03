@@ -6,6 +6,7 @@ import { gerarPix } from '../services/gerarPix';
 import { GetById } from '../../products/services/GetById';
 import { Create as CreateRifaClient } from '../../rifasClients/services/Create';
 import { VerifyRifaPaidIsTrue } from '../../rifas/services/VerifyRifaPaidIsTrue';
+import { FindById } from '../../rifas/services/FindById';
 import { io } from '../../../shared/http';
 
 export class Controller {
@@ -13,6 +14,7 @@ export class Controller {
         request: Request,
         response: Response,
     ): Promise<Response> {
+        let rifasNumbers = [];
         const { name, rifas, numberPhone, productId, socketId, instagram } =
             request.body;
 
@@ -24,6 +26,7 @@ export class Controller {
         const getProductById = container.resolve(GetById);
         const createRifaClient = container.resolve(CreateRifaClient)
         const verifyRifaPaidIsTrue = container.resolve(VerifyRifaPaidIsTrue)
+        const getRifaById = container.resolve(FindById)
 
         for(const rifa of rifas) {
             await verify.execute(rifa);
@@ -39,11 +42,15 @@ export class Controller {
 
         const valorTotalAPagar = rifas.length * product.price
 
-        const { qrcode, cobranca } = await gerarPix(valorTotalAPagar, client.id)
+        for(const rifa of rifas) {
+            const rifaNumber = await getRifaById.execute(rifa);
+            rifasNumbers.push(rifaNumber?.number)
+        }
+        
 
+        const { qrcode, cobranca } = await gerarPix(valorTotalAPagar, client.id, rifasNumbers)
 
         for(const rifa of rifas) {
-
             await createRifaClient.execute({clientId: client.id, rifaId: rifa, txid: cobranca.data.txid})
         }
 
