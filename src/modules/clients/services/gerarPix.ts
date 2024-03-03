@@ -61,7 +61,7 @@ const cert = fs.readFileSync(
             original: totalPrice.toFixed(2).toString()
         },
         chave: process.env.GN_CHAVE_PIX,
-        solicitacaoPagador: clientId + rifas
+        solicitacaoPagador: `${clientId+'-'+rifas}`
     }
 
     const cobranca = await reqGN.post('/v2/cob', dataCob)
