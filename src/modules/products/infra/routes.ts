@@ -24,7 +24,7 @@ if(process.env.ROUTE_OFF !== 'true') {
                 name: Joi.string().required(),
                 price: Joi.number().required(),
                 videoSrc: Joi.string().required(),
-                description: Joi.string().required(),
+                description: Joi.string().required().max(240),
                 luckDay: Joi.date().required(),
                 quantidadeDeRifas: Joi.number().required(),
             },
