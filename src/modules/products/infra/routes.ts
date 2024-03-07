@@ -34,4 +34,10 @@ if(process.env.ROUTE_OFF !== 'true') {
     
 }
 
+router.patch('/:productId', celebrate({
+    [Segments.PARAMS]: {
+        productId: Joi.string().uuid().required(),
+    },
+}), controller.updateIsActivate)
+
 

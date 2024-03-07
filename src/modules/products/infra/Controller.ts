@@ -6,6 +6,7 @@ import { GetAll } from '../services/GetAll';
 import { Create } from '../services/Create';
 import slugify from 'slugify';
 import { GetBySlug } from '../services/GetBySlug';
+import { UpdateIsActivate } from '../services/UpdateIsActivate';
 
 export class Controller {
     async get(request: Request, response: Response): Promise<Response> {
@@ -29,7 +30,7 @@ export class Controller {
 
     async create(request: Request, response: Response): Promise<Response> {
 
-        const { name, price, imgSrc, videoSrc, description, luckDay, quantidadeDeRifas } = request.body
+        const { name, price, videoSrc, description, luckDay, quantidadeDeRifas } = request.body
 
         const image = request.file?.filename ? request.file?.filename : 'SEM IMG'
 
@@ -38,6 +39,17 @@ export class Controller {
         const item = await create.execute({name, price, imgSrc: image, slug: slugify(name, {
             lower: true,
         }), videoSrc, description, luckDay, quantidadeDeRifas})
+
+        return response.status(200).json(instanceToPlain(item))
+    }
+
+    async updateIsActivate(request: Request, response: Response): Promise<Response> {
+
+        const { productId } = request.params
+
+        const update = container.resolve(UpdateIsActivate)
+
+        const item = await update.execute(productId)
 
         return response.status(200).json(instanceToPlain(item))
     }

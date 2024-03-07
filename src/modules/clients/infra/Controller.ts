@@ -8,6 +8,7 @@ import { Create as CreateRifaClient } from '../../rifasClients/services/Create';
 import { VerifyRifaPaidIsTrue } from '../../rifas/services/VerifyRifaPaidIsTrue';
 import { FindById } from '../../rifas/services/FindById';
 import { io } from '../../../shared/http';
+import { AppError } from '../../../shared/AppError';
 
 export class Controller {
     async create(
@@ -37,7 +38,11 @@ export class Controller {
         const product = await getProductById.execute(productId)
 
         if(!product) {
-            throw new Error('Produto não encontrado.')
+            throw new AppError('Produto não encontrado.')
+        }
+
+        if(product.isActivate == false) {
+            throw new AppError('O Sorteio está desativado.')
         }
 
         const valorTotalAPagar = rifas.length * product.price

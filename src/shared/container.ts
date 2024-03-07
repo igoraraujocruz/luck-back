@@ -14,6 +14,9 @@ import { Repository as ProductRepository } from '../modules/products/infra/Repos
 import { contract as rifasClientsContract } from '../modules/rifasClients/interfaces/contract';
 import { Repository as RifasClientsRepository } from '../modules/rifasClients/infra/Repository';
 
+import { contract as usersContract } from '../modules/users/interfaces/contract';
+import { Repository as UsersRepository } from '../modules/users/infra/Repository';
+
 container.registerSingleton<clientContract>(
     'Client',
     ClientRepository,
@@ -32,4 +35,9 @@ container.registerSingleton<productContract>(
 container.registerSingleton<rifasClientsContract>(
     'RifasClients',
     RifasClientsRepository,
+);
+
+container.registerSingleton<usersContract>(
+    'User',
+    UsersRepository,
 );
