@@ -1,5 +1,6 @@
 import { inject, injectable } from 'tsyringe';
 import { contract } from '../../rifasClients/interfaces/contract';
+import { AppError } from '../../../shared/AppError';
 
 @injectable()
 export class RemoveClient {
@@ -8,10 +9,14 @@ export class RemoveClient {
         private repository: contract,
     ) {}
 
-    async execute(clientId: string): Promise<void | undefined> {
+    async execute(clientId: string): Promise<void> {
 
-        const client = await this.repository.remove(clientId)
+        const client = await this.repository.findById(clientId)
 
-        return client;
+        if(!client) {
+            throw new AppError('Client not found');
+        }
+
+        await this.repository.remove(clientId)
     }
 }

@@ -42,6 +42,9 @@ export class Product {
     @Column()
     rifasRestantes: number;
 
+    @Column()
+    isActivate: boolean;
+
     @OneToMany(() => Rifa, rifa => rifa.product, {
         eager: true
     })

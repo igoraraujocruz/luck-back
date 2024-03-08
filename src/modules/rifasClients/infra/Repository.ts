@@ -47,9 +47,9 @@ export class Repository implements contract {
     }
 
     
-    async remove(rifaId: string): Promise<void | undefined> {
+    async remove(clientId: string): Promise<void | undefined> {
        await this.ormRepository.delete({
-            rifaId: rifaId
+            clientId: clientId
         });
     }
 
