@@ -24,11 +24,11 @@ export class Repository implements contract {
         return item;
     }
 
-    async findById(rifaClientId: string): Promise<RifasClients | undefined> {
+    async findById(clientId: string): Promise<RifasClients | undefined> {
 
         const item = await this.ormRepository.findOne({
             where: {
-                id: rifaClientId
+                clientId: clientId
             }
         });
 
