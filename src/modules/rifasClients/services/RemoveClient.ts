@@ -13,8 +13,6 @@ export class RemoveClient {
 
         const client = await this.repository.findById(clientId)
 
-        console.log(client)
-
         if(!client) {
             throw new AppError('Client not found');
         }
