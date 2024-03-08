@@ -8,6 +8,7 @@ const controller = new Controller();
 
 router.post(
     '/',
+    ensureAuthenticated,
     celebrate({
         [Segments.BODY]: {
             username: Joi.string().required(),
