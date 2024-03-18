@@ -35,6 +35,17 @@ export class Repository implements contract {
         return item;
     }
 
+    async findAllByClientId(clientId: string): Promise<RifasClients[]> {
+
+        const item = await this.ormRepository.find({
+            where: {
+                clientId: clientId
+            }
+        });
+
+        return item;
+    }
+
     async findByTxId(txId: string): Promise<RifasClients[]> {
 
         const item = await this.ormRepository.find({
