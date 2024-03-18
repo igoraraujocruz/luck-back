@@ -45,4 +45,4 @@ jobs:
             cd ~/luck-back
             yarn
             ./node_modules/.bin/typeorm migration:run
-            pm2 restart server
+            pm2 restart luck
